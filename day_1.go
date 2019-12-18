@@ -12,37 +12,37 @@ package main
 
 import (
 	"bufio"
-  "fmt"
-  "log"
-  "os"
-  "strconv"
+	"fmt"
+	"log"
+	"os"
+	"strconv"
 )
 
 func main() {
 	fuel_acc := 0
 	// open the file
 	file, err := os.Open("day_1_input.txt")
-  if err != nil {
-    log.Fatal(err)
-  }
-  defer file.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
 
-  // read every line and calc the fuel
-  scanner := bufio.NewScanner(file)
-  for scanner.Scan() {
-  	mass, err := strconv.Atoi(scanner.Text())
-  	if err != nil {
-  		log.Fatal(err)
-  	}
-    fuel_acc += calc_fuel(mass)
-  }
+	// read every line and calc the fuel
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		mass, err := strconv.Atoi(scanner.Text())
+		if err != nil {
+			log.Fatal(err)
+		}
+		fuel_acc += calc_fuel(mass)
+	}
 
-  if err := scanner.Err(); err != nil {
-    log.Fatal(err)
-  }
+	if err := scanner.Err(); err != nil {
+		log.Fatal(err)
+	}
 
-  // tell us the final fuel count
-  fmt.Printf("Total fuel: %v \n", fuel_acc)
+	// tell us the final fuel count
+	fmt.Printf("Total fuel: %v \n", fuel_acc)
 }
 
 // for dev / testing
@@ -52,5 +52,5 @@ func display_calc(mass int, fuel int) {
 }
 
 func calc_fuel(mass int) int {
-	return mass / 3 - 2
+	return mass/3 - 2
 }
