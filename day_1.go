@@ -19,6 +19,13 @@ import (
 )
 
 func main() {
+	fuel := calc_fuel_for_modules()
+
+	// tell us the final fuel count
+	fmt.Printf("Total fuel: %v \n", fuel)
+}
+
+func calc_fuel_for_modules() int {
 	fuel_acc := 0
 	// open the file
 	file, err := os.Open("day_1_input.txt")
@@ -34,15 +41,29 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fuel_acc += calc_fuel(mass)
+		fuel_acc += calc_fuel_for_module(mass)
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 
-	// tell us the final fuel count
-	fmt.Printf("Total fuel: %v \n", fuel_acc)
+	return fuel_acc
+}
+
+func calc_fuel_for_module(mass int) int {
+	fuel := calc_fuel(mass)
+
+	return calc_fuel_for_fuel(fuel, fuel)
+}
+
+func calc_fuel_for_fuel(fuel_mass int, fuel_acc int) int {
+	if fuel_mass <= 0 {
+		return fuel_acc
+	} else {
+		new_fuel := calc_fuel(fuel_mass)
+		return calc_fuel_for_fuel(new_fuel, fuel_acc+new_fuel)
+	}
 }
 
 // for dev / testing
@@ -52,5 +73,9 @@ func display_calc(mass int, fuel int) {
 }
 
 func calc_fuel(mass int) int {
-	return mass/3 - 2
+	if mass <= 8 {
+		return 0
+	} else {
+		return mass/3 - 2
+	}
 }
