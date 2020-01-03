@@ -1,6 +1,6 @@
 defmodule AdventOfCode.Day03 do
   defmodule WireTracer do
-    # returns a list of tuples for all the coordinates a wire crosses
+    # returns a list of tuples for all the coordinates a wire passes
     def trace(trace_inputs) do
       trace_inputs
       |> Enum.reduce([{0,0}], fn(trace_input, acc) -> add_wire(trace_input, acc) end)
