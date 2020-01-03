@@ -25,10 +25,16 @@ defmodule AdventOfCode.Day03 do
     wire_1 = WireTracer.trace(input_1)
     wire_2 = WireTracer.trace(input_2)
 
-    find_shortest_intersection(wire_1, wire_2)
+    find_closest_intersection(wire_1, wire_2)
   end
 
-  def part2(args) do
+  def part2(input) do
+    [input_1, input_2] = parse_input(input)
+
+    wire_1 = WireTracer.trace(input_1)
+    wire_2 = WireTracer.trace(input_2)
+
+    find_fastest_intersection(wire_1, wire_2)
   end
 
   defp parse_input(input) when is_binary(input) do
@@ -45,10 +51,26 @@ defmodule AdventOfCode.Day03 do
     end)
   end
 
-  defp find_shortest_intersection(wire_1, wire_2) do
+  defp find_closest_intersection(wire_1, wire_2) do
     MapSet.intersection(MapSet.new(wire_1), MapSet.new(wire_2))
     |> Enum.reject(fn(coord) -> coord == {0,0} end)
     |> Enum.map(fn({x,y}) -> abs(x) + abs(y) end)
     |> Enum.min
+  end
+
+  defp find_fastest_intersection(wire_1, wire_2) do
+    wire_1_map = make_step_map(wire_1)
+    wire_2_map = make_step_map(wire_2)
+    MapSet.intersection(MapSet.new(wire_1), MapSet.new(wire_2))
+    |> Enum.reject(fn(coord) -> coord == {0,0} end)
+    |> Enum.map(fn({x,y}) -> wire_1_map[{x,y}] + wire_2_map[{x,y}] end)
+    |> Enum.min
+  end
+
+  defp make_step_map(wire) do
+    wire
+    |> Enum.reverse # this will have the nice side effect of taking the shortest distance
+    |> Enum.with_index
+    |> Map.new
   end
 end

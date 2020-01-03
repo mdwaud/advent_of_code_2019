@@ -36,11 +36,15 @@ U62,R66,U55,R34,D71,R55,D58,R83"
     end
   end
 
-  @tag :skip
-  test "part2" do
-    input = nil
-    result = part2(input)
+  describe "part 2" do
+    test "example 1" do
+      input =
+"R75,D30,R83,U83,L12,D49,R71,U7,L72
+U62,R66,U55,R34,D71,R55,D58,R83"
 
-    assert result
+      result = part2(input)
+
+      assert 610 == result
+    end
   end
 end

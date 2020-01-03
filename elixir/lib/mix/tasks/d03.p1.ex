@@ -5,7 +5,6 @@ defmodule Mix.Tasks.D03.P1 do
 
   @shortdoc "Day 03 Part 1"
   def run(args) do
-    #{:ok, file} = File.open("day_03_input.txt", [:read])
     {:ok, input} = File.read("inputs/day_03_input.txt")
 
     if Enum.member?(args, "-b"),
